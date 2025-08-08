@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfigation } from './config/env.config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { EnvConfigation } from './config/env.config';
       synchronize: true, //Sincroniza la base de datos con las entidades (no recomendado en producción)
     }),
     AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],

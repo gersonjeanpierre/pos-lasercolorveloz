@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto'
 import { GetUser } from './decorators/get-user.decorator';
-import { User } from './entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { ValidRoles } from './interfaces';
 import { Auth } from './decorators';
 

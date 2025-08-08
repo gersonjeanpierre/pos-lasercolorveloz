@@ -21,6 +21,25 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@auth/*": [
+        "src/auth/*"
+      ],
+      "@users/*": [
+        "src/users/*"
+      ],
+      "@products/*": [
+        "src/products/*"
+      ],
+      "@orders/*": [
+        "src/orders/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ]
+    }
   }
 }
