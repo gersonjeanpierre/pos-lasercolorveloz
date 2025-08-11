@@ -1,8 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from './dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@users/entities/user.entity';
-import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
@@ -28,7 +25,6 @@ export class AuthService {
     } catch (error) {
       this.handleDBErrors(error);
     }
-
   }
 
   async login(loginUserDto: LoginUserDto) {
@@ -52,20 +48,14 @@ export class AuthService {
   }
 
   private getJwtToken(payload: JwtPayload) {
-
     const token = this.jwtService.sign(payload);
     return token;
-
   }
 
   private handleDBErrors(error: any): never {
-
     if (error.code === '23505') {
       throw new BadRequestException(error.detail);
     }
-
-    console.log(error);
     throw new InternalServerErrorException('Revisar logs del servidor');
-
   }
 }

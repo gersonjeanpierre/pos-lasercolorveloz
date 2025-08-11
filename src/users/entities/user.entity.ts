@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryColumn } from "typeorm";
+import { Order } from "@/orders/entities/order.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -23,6 +24,11 @@ export class User {
   fullName: string;
 
   @Column({
+    type: 'text'
+  })
+  responsibility: string;
+
+  @Column({
     type: 'boolean',
     default: true
   })
@@ -34,6 +40,12 @@ export class User {
     default: ['employee']
   })
   roles: string[];
+
+  @OneToMany(
+    () => Order,
+    (order) => order.user
+  )
+  order: Order;
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {

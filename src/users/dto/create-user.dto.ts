@@ -22,4 +22,8 @@ export class CreateUserDto {
   @MinLength(3)
   fullName: string;
 
+  @IsString()
+  @MinLength(5)
+  responsibility: string;
+
 }
