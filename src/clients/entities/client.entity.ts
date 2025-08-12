@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import { ValidTypeClients } from "../interfaces/valid-type-clients.interface";
-import { ValidTypePerson } from "../interfaces/valid-type-person.interface";
+import { ValidTypeClients } from "@/common/interfaces/clients/valid-type-clients.interface";
+import { ValidTypePerson } from "@/common/interfaces/clients/valid-type-person.interface";
 
 @Entity('clients')
 export class Client {
@@ -65,6 +65,7 @@ export class Client {
   @Column({
     type: 'varchar',
     nullable: true,
+    unique: true,
     length: 20
   })
   ce?: string; // cedula extranjeria

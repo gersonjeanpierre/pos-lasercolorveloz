@@ -24,9 +24,17 @@ export class ClientsService {
       return await this.clientRepository.save(client);
     }
     catch (error) {
-      if (error.code === '23505' && error.detail.includes('phone')) {
-        // 23505 es el código de error de Postgres para unique violation
-        throw new ConflictException('El teléfono ya está registrado.');
+      if (error.code === '23505') { // 23505 es el código de error de Postgres para unique violation
+        if (error.detail.includes('dni'))
+          throw new ConflictException('El DNI ya está registrado.');
+        if (error.detail.includes('phone'))
+          throw new ConflictException('El teléfono ya está registrado.');
+        if (error.detail.includes('ce'))
+          throw new ConflictException('El CE ya está registrado.');
+        if (error.detail.includes('socialReason'))
+          throw new ConflictException('La Razón Social ya está registrada.');
+        if (error.detail.includes('ruc'))
+          throw new ConflictException('El RUC ya está registrado.');
       }
       throw error;
     }

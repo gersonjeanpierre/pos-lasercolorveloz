@@ -18,7 +18,4 @@ export class ClientsController {
   findAll() {
     return this.clientsService.findAll();
   }
-
-
-
 }
