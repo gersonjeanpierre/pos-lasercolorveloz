@@ -3,7 +3,9 @@ import { IsEmail, IsString, IsStrongPassword, MinLength } from "class-validator"
 export class CreateUserDto {
 
   @IsString()
-  @IsEmail()
+  @IsEmail({}, {
+    message: 'Email debe ser un correo electrónico válido.'
+  })
   email: string;
 
   @IsString()
@@ -14,16 +16,20 @@ export class CreateUserDto {
     minNumbers: 1,
     minSymbols: 1
   }, {
-    message: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one symbol.'
+    message: 'Contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un símbolo.'
   })
   password: string;
 
   @IsString()
-  @MinLength(3)
+  @MinLength(3, {
+    message: 'Debe ingresar un nombre completo con al menos 3 caracteres.'
+  })
   fullName: string;
 
   @IsString()
-  @MinLength(5)
+  @MinLength(5, {
+    message: 'Debe ingresar una responsabilidad con al menos 5 caracteres.'
+  })
   responsibility: string;
 
 }

@@ -13,16 +13,17 @@ export class AuthService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-
     try {
       const user = await this.usersService.create(createUserDto);
       const { password, ...result } = user;
       return {
         ...result,
         token: this.getJwtToken({ id: user.id }),
+
       }
 
     } catch (error) {
+      console.log(error);
       this.handleDBErrors(error);
     }
   }

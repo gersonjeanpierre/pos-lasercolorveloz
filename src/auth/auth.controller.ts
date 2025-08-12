@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto'
 import { GetUser } from './decorators/get-user.decorator';
 import { User } from '../users/entities/user.entity';
-import { ValidRoles } from './interfaces';
+import { ValidRoles } from '@common/interfaces/auth/valid-roles.interface';
 import { Auth } from './decorators';
 
 @Controller('auth')

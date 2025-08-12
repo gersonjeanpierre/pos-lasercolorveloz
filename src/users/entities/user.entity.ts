@@ -7,8 +7,9 @@ export class User {
   id: string;
 
   @Column({
-    type: 'text',
-    unique: true
+    type: 'varchar',
+    unique: true,
+    length: 100
   })
   email: string;
 
@@ -19,12 +20,14 @@ export class User {
   password: string;
 
   @Column({
-    type: 'text'
+    type: 'varchar',
+    length: 75,
   })
   fullName: string;
 
   @Column({
-    type: 'text'
+    type: 'varchar',
+    length: 50
   })
   responsibility: string;
 
@@ -35,8 +38,9 @@ export class User {
   isActive: boolean;
 
   @Column({
-    type: 'text',
+    type: 'varchar',
     array: true,
+    length: 20,
     default: ['employee']
   })
   roles: string[];
