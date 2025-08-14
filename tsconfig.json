@@ -31,8 +31,8 @@
       "@users/*": [
         "src/users/*"
       ],
-      "@products/*": [
-        "src/products/*"
+      "@catalog/*": [
+        "src/catalog/*"
       ],
       "@orders/*": [
         "src/orders/*"
