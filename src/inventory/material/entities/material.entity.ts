@@ -1,6 +1,5 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { MaterialPriceHistory } from '../../material-price-history/entities/material-price-history.entity';
 
 @Entity()
 export class Material {
@@ -54,9 +53,4 @@ export class Material {
   })
   isActive: boolean;
 
-  @OneToMany(
-    () => MaterialPriceHistory,
-    history => history.material
-  )
-  priceHistory: MaterialPriceHistory[];
 }

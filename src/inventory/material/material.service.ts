@@ -4,15 +4,13 @@ import { UpdateMaterialDto } from './dto/update-material.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Material } from './entities/material.entity';
 import { Repository } from 'typeorm';
-import { MaterialPriceHistoryService } from '../material-price-history/material-price-history.service';
 
 @Injectable()
 export class MaterialService {
 
   constructor(
     @InjectRepository(Material)
-    private readonly materialRepository: Repository<Material>,
-    private readonly materialPriceHistoryService: MaterialPriceHistoryService
+    private readonly materialRepository: Repository<Material>
   ) { }
 
   async create(createMaterialDto: CreateMaterialDto): Promise<Material> {
