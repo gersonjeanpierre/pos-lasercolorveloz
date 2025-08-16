@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsStrongPassword, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
 export class LoginUserDto {
 
@@ -18,4 +18,8 @@ export class LoginUserDto {
     message: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one symbol.'
   })
   password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  standId: string;
 }

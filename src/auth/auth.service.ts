@@ -1,15 +1,18 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto, LoginUserDto } from './dto';
 import * as bcrypt from 'bcrypt'
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '@/users/users.service';
+import { handleDBErrors } from '@common/db-errors/handle-db-errors';
+import { StandService } from '@/locations/stand/stand.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly standService: StandService,
   ) { }
 
   async create(createUserDto: CreateUserDto) {
@@ -19,31 +22,34 @@ export class AuthService {
       return {
         ...result,
         token: this.getJwtToken({ id: user.id }),
-
       }
 
     } catch (error) {
-      console.log(error);
-      this.handleDBErrors(error);
+      handleDBErrors(error);
     }
   }
 
   async login(loginUserDto: LoginUserDto) {
 
-    const { email, password } = loginUserDto;
+    const { email, password, standId } = loginUserDto;
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException('Credentials are not valid (email)');
+      throw new UnauthorizedException('Credenciales inválidas (email)');
     }
 
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Credentials are not valid (password)');
+      throw new UnauthorizedException('Credenciales inválidas (password)');
     }
 
+    const stand = this.standService.findOne(standId);
+    if (!stand) {
+      throw new NotFoundException(`Stand seleccionado no encontrado.`);
+    }
     return {
       ...user,
+      stand,
       token: this.getJwtToken({ id: user.id }),
     }
   }
@@ -53,10 +59,4 @@ export class AuthService {
     return token;
   }
 
-  private handleDBErrors(error: any): never {
-    if (error.code === '23505') {
-      throw new BadRequestException(error.detail);
-    }
-    throw new InternalServerErrorException('Revisar logs del servidor');
-  }
 }
