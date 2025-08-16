@@ -1,4 +1,5 @@
 
+import { InventoryMovement } from '@/inventory/movements/entities/movement.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
@@ -52,5 +53,11 @@ export class Material {
     default: true
   })
   isActive: boolean;
+
+  @OneToMany(
+    () => InventoryMovement,
+    (movement) => movement.material
+  )
+  movements: InventoryMovement[];
 
 }
