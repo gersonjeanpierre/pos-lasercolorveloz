@@ -1,13 +1,11 @@
-// src/products/dto/create-product.dto.ts
-import { IsString, IsNumber, IsOptional } from 'class-validator';
-import { ProductType } from '@/common/interfaces/catalog/products/product-type.enum';
+import { IsString, IsNumber, IsOptional, IsArray } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
   name: string;
 
   @IsString()
-  type: ProductType;
+  type: string;
 
   @IsNumber()
   price: number;

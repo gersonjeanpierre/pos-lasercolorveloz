@@ -4,6 +4,8 @@ import { ProductAddonsService } from './product-addons.service';
 import { ProductAddon } from './entities/product-addon.entity';
 import { CreateProductAddonDto } from './dto/create-product-addon.dto';
 import { UpdateProductAddonDto } from './dto/update-product-addon.dto';
+import { Auth } from '@/auth/decorators';
+import { ValidRoles } from '@/common/interfaces/auth/valid-roles.interface';
 
 @Controller('product-addons')
 export class ProductAddonsController {
@@ -15,6 +17,7 @@ export class ProductAddonsController {
   }
 
   @Get()
+  @Auth(ValidRoles.admin, ValidRoles.employee)
   findAll(): Promise<ProductAddon[]> {
     return this.productAddonService.findAll();
   }

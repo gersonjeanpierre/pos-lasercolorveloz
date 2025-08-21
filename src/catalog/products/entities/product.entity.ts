@@ -13,11 +13,11 @@ export class Product {
   name: string;
 
   @Column({
-    type: 'enum',
-    enum: ProductType,
+    type: 'varchar',
+    length: 50,
     default: ProductType.Impresion
   })
-  type: ProductType;
+  type: string;
 
   @Column({
     type: 'decimal',
