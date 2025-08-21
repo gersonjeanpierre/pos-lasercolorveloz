@@ -4,8 +4,8 @@ import { Material } from '../../material/entities/material.entity';
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 
 export enum MovementType {
-  ENTRY = 'entrada',
-  EXIT = 'salida',
+  ENTRY = 'ENTRADA',
+  EXIT = 'SALIDA',
 }
 
 @Entity()
@@ -17,10 +17,11 @@ export class InventoryMovement {
   quantity: number;
 
   @Column({
-    type: 'enum',
-    enum: MovementType,
+    type: 'varchar',
+    length: 20,
+    default: MovementType.ENTRY
   })
-  type: MovementType;
+  type: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date: Date;

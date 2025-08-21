@@ -18,6 +18,13 @@ async function bootstrap() {
     }
   ));
 
+  app.enableCors({
+    // multiple origin
+    origin: ['http://127.0.0.1:4200', 'http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true
+  });
+
   await app.listen(process.env.PORT!);
 }
 

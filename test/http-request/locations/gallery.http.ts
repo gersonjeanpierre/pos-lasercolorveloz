@@ -20,6 +20,7 @@ async function createGalleries() {
 
 async function getAllGalleries() {
   const result = await galleryClient.getAll();
+  console.log(result);
   console.log(result[0].stands);
 }
 

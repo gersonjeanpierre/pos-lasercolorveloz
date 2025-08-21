@@ -5,7 +5,7 @@ import { UpdateStandDto } from './dto/update-stand.dto';
 
 @Controller('stand')
 export class StandController {
-  constructor(private readonly standService: StandService) {}
+  constructor(private readonly standService: StandService) { }
 
   @Post()
   create(@Body() createStandDto: CreateStandDto) {
@@ -19,7 +19,7 @@ export class StandController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.standService.findOne(+id);
+    return this.standService.findOne(id);
   }
 
   @Patch(':id')

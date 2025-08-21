@@ -43,12 +43,13 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas (password)');
     }
 
-    const stand = this.standService.findOne(standId);
+    const stand = await this.standService.findOne(standId);
     if (!stand) {
       throw new NotFoundException(`Stand seleccionado no encontrado.`);
     }
+    const { password: _, ...userWithoutPassword } = user;
     return {
-      ...user,
+      ...userWithoutPassword,
       stand,
       token: this.getJwtToken({ id: user.id }),
     }

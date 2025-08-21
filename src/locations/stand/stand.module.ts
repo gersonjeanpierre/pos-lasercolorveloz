@@ -11,5 +11,6 @@ import { Gallery } from '../gallery/entities/gallery.entity';
   ],
   controllers: [StandController],
   providers: [StandService],
+  exports: [StandService]
 })
 export class StandModule { }
