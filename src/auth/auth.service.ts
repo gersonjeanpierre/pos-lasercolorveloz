@@ -49,7 +49,7 @@ export class AuthService {
     }
     const { password: _, ...userWithoutPassword } = user;
     return {
-      ...userWithoutPassword,
+      user: userWithoutPassword,
       stand,
       token: this.getJwtToken({ id: user.id }),
     }

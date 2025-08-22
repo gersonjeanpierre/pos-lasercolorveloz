@@ -30,7 +30,15 @@ export class UsersService {
   async findByEmail(email: string): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { email },
-      select: { email: true, password: true, id: true }
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        fullName: true,
+        responsibility: true,
+        isActive: true,
+        roles: true,
+      }
     })
   }
 

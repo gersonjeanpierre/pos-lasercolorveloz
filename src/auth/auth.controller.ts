@@ -27,4 +27,10 @@ export class AuthController {
   ) {
     return { message: 'This is private data', user };
   }
+
+  @Get('validate')
+  @Auth() // Asume que el guard de JWT está configurado
+  validateToken(@GetUser() user: User) {
+    return { valid: true, message: 'Token válido', user };
+  }
 }

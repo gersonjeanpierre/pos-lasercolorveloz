@@ -24,7 +24,7 @@ export class UserRoleGuard implements CanActivate {
     const user = request.user as User;
 
     if (!user)
-      throw new BadRequestException('User not found in request');
+      throw new BadRequestException('Usuario no encontrado');
 
     for (const role of user.roles) {
       if (validRoles.includes(role)) {
@@ -32,7 +32,7 @@ export class UserRoleGuard implements CanActivate {
       }
     }
 
-    throw new ForbiddenException(`User ${user.fullName} does not have permission to access this resource. Required roles: ${validRoles.join(', ')}`);
+    throw new ForbiddenException(`Usuario ${user.fullName} no tiene permiso para acceder a este recurso. Roles requeridos: ${validRoles.join(', ')}`);
 
   }
 }
