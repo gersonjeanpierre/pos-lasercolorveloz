@@ -45,6 +45,13 @@ export class User {
   })
   roles: string[];
 
+  @Column({
+    type: 'text',
+    nullable: true,
+    unique: true
+  })
+  refreshToken: string;
+
   @OneToMany(
     () => Order,
     (order) => order.user

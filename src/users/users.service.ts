@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 import { User } from '@users/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { v7 as uuidv7 } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { UpdateClientDto } from '@/clients/dto/update-client.dto';
 
 @Injectable()
 export class UsersService {
@@ -44,5 +45,20 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find();
+  }
+
+  async update(id: string, updateUserDto: UpdateClientDto): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException(`Usuario no encontrado`);
+
+    this.userRepository.merge(user, updateUserDto);
+    return await this.userRepository.save(user);
+  }
+
+  async findByRefreshToken(refreshToken: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({
+      where: { refreshToken }
+    })
+    return user;
   }
 }

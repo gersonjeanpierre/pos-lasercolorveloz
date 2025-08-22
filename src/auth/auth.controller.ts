@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto'
 import { GetUser } from './decorators/get-user.decorator';
 import { User } from '../users/entities/user.entity';
-import { ValidRoles } from '@common/interfaces/auth/valid-roles.interface';
 import { Auth } from './decorators';
 
 @Controller('auth')
@@ -20,12 +19,9 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
-  @Get('private')
-  @Auth(ValidRoles.admin)
-  getPrivateData(
-    @GetUser() user: User
-  ) {
-    return { message: 'This is private data', user };
+  @Post('refresh-token')
+  refreshToken(@Body('refreshToken') refreshToken: string) {
+    return this.authService.refreshToken(refreshToken);
   }
 
   @Get('validate')

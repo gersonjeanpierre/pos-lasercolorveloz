@@ -47,17 +47,48 @@ export class AuthService {
     if (!stand) {
       throw new NotFoundException(`Stand seleccionado no encontrado.`);
     }
+
+    const tokens = this.getJwtToken({ id: user.id });
+    await this.usersService.update(user.id, { refreshToken: tokens.refreshToken })
+
     const { password: _, ...userWithoutPassword } = user;
     return {
       user: userWithoutPassword,
       stand,
-      token: this.getJwtToken({ id: user.id }),
+      ...tokens
     }
   }
 
+  async refreshToken(refreshToken: string) {
+    const user = await this.usersService.findByRefreshToken(refreshToken);
+    if (!user) {
+      throw new UnauthorizedException('Token de actualización inválido o expirado');
+    }
+
+    try {
+      this.jwtService.verify(refreshToken,
+        { secret: process.env.JWT_REFRESH_TOKEN_SECRET }
+      );
+    } catch (error) {
+      throw new UnauthorizedException('Token de actualización inválido');
+    }
+
+    const newTokens = this.getJwtToken({ id: user.id });
+    await this.usersService.update(user.id, { refreshToken: newTokens.refreshToken })
+
+    return newTokens;
+  }
+
   private getJwtToken(payload: JwtPayload) {
-    const token = this.jwtService.sign(payload);
-    return token;
+    const accessToken = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+      expiresIn: process.env.JWT_REFRESH_EXPIRATION_TIME,
+    })
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
 }
