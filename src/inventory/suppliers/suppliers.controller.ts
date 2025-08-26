@@ -19,7 +19,7 @@ export class SuppliersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.suppliersService.findOne(+id);
+    return this.suppliersService.findOne(id);
   }
 
   @Patch(':id')
@@ -29,6 +29,6 @@ export class SuppliersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.suppliersService.remove(+id);
+    return this.suppliersService.remove(id);
   }
 }

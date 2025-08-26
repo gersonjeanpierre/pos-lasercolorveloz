@@ -26,7 +26,7 @@ export class SuppliersService {
     return await this.suppliersRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} supplier`;
   }
 
@@ -39,7 +39,7 @@ export class SuppliersService {
     return await this.suppliersRepository.save(supplier);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} supplier`;
   }
 }
