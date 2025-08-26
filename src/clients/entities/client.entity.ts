@@ -77,4 +77,10 @@ export class Client {
     length: 100
   })
   email?: string;
+
+  @Column({
+    type: 'boolean',
+    default: true
+  })
+  isActive: boolean;
 }

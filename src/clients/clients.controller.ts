@@ -18,4 +18,20 @@ export class ClientsController {
   findAll() {
     return this.clientsService.findAll();
   }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.clientsService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateClientDto: CreateClientDto) {
+    return this.clientsService.update(id, updateClientDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.clientsService.remove(id);
+  }
+
 }

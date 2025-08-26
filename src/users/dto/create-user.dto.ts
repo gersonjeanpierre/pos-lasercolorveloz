@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsStrongPassword, MinLength } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsStrongPassword, MinLength } from "class-validator";
 
 export class CreateUserDto {
 
@@ -31,5 +31,12 @@ export class CreateUserDto {
     message: 'Debe ingresar una responsabilidad con al menos 5 caracteres.'
   })
   responsibility: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(5, {
+    message: 'Debe ingresar un rol con al menos 5 caracteres.'
+  })
+  roles?: string[];
 
 }

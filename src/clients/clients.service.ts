@@ -44,4 +44,26 @@ export class ClientsService {
     return await this.clientRepository.find();
   }
 
+  async findOne(id: string): Promise<Client> {
+    const client = await this.clientRepository.findOne({ where: { id } });
+    if (!client) throw new Error(`Cliente no encontrado`);
+    return client;
+  }
+
+  async update(id: string, updateClientDto: Partial<CreateClientDto>): Promise<Client> {
+    const client = await this.clientRepository.findOne({ where: { id } });
+    if (!client) throw new Error(`Cliente no encontrado`);
+
+    this.clientRepository.merge(client, updateClientDto);
+    return await this.clientRepository.save(client);
+  }
+
+  async remove(id: string): Promise<void> {
+    const client = await this.clientRepository.findOne({ where: { id } });
+    if (!client) throw new Error(`Cliente no encontrado`);
+
+    client.isActive = false;
+    await this.clientRepository.save(client);
+  }
+
 }
