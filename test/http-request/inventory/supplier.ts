@@ -1,16 +1,34 @@
-const data = {
-  // id: '0198aa77-cf01-7169-8b5c-148618f5499b',
-  socialReason: "Lonas Top S.A.C.",
-  ruc: "12345178999",
-  contactName: "John Doe",
-  phone: "959632563"
-};
+import { ApiClient } from "../api-client";
 
-fetch("http://localhost:3000/api/v1/suppliers", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-})
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
+const supplierClient = new ApiClient('suppliers');
+
+const data = [
+  {
+    socialReason: "Lonas Top S.A.C.",
+    ruc: "20345178999",
+    contactName: "John Doe",
+    phone: "959632563",
+    email: "johndoe@example.com"
+  },
+  {
+    socialReason: "Tintas Supremas S.A.C.",
+    ruc: "20396312589",
+    contactName: "Vladimir Putin",
+    phone: "921532589",
+    email: "putin@example.com"
+  },
+  {
+    socialReason: "Papeleria Nuclear S.A.C.",
+    ruc: "21596392741",
+    contactName: "Khim Jong-un",
+    phone: "948632520",
+    email: "kim@example.com"
+  },
+];
+
+const createSuppliers = async () => {
+  const result = await supplierClient.post(data);
+  console.log(result);
+}
+
+createSuppliers();

@@ -5,7 +5,7 @@ import { UpdateSupplierDto } from './dto/update-supplier.dto';
 
 @Controller('suppliers')
 export class SuppliersController {
-  constructor(private readonly suppliersService: SuppliersService) {}
+  constructor(private readonly suppliersService: SuppliersService) { }
 
   @Post()
   create(@Body() createSupplierDto: CreateSupplierDto) {
@@ -24,7 +24,7 @@ export class SuppliersController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto) {
-    return this.suppliersService.update(+id, updateSupplierDto);
+    return this.suppliersService.update(id, updateSupplierDto);
   }
 
   @Delete(':id')

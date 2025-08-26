@@ -30,8 +30,13 @@ export class SuppliersService {
     return `This action returns a #${id} supplier`;
   }
 
-  update(id: number, updateSupplierDto: UpdateSupplierDto) {
-    return `This action updates a #${id} supplier`;
+  async update(id: string, updateSupplierDto: UpdateSupplierDto) {
+    const supplier = await this.suppliersRepository.findOne({ where: { id } });
+
+    if (!supplier) throw new Error(`Proveedor no encontrado`);
+
+    this.suppliersRepository.merge(supplier, updateSupplierDto);
+    return await this.suppliersRepository.save(supplier);
   }
 
   remove(id: number) {
