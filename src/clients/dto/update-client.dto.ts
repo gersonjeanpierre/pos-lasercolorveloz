@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateClientDto } from './create-client.dto';
 import { IsOptional } from 'class-validator';
-import { ValidTypePerson } from '@/common/interfaces/clients/valid-type-person.interface';
-import { ValidTypeClients } from '@/common/interfaces/clients/valid-type-clients.interface';
+import { ValidTypePerson } from '@/common/enums/clients/valid-type-person.enum';
+import { ValidTypeClients } from '@/common/enums/clients/valid-type-clients.enum';
 
 export class UpdateClientDto extends PartialType(CreateClientDto) {
 

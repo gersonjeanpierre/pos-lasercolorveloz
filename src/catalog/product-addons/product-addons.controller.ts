@@ -5,7 +5,7 @@ import { ProductAddon } from './entities/product-addon.entity';
 import { CreateProductAddonDto } from './dto/create-product-addon.dto';
 import { UpdateProductAddonDto } from './dto/update-product-addon.dto';
 import { Auth } from '@/auth/decorators';
-import { ValidRoles } from '@/common/interfaces/auth/valid-roles.interface';
+import { ValidRoles } from '@/common/enums/auth/valid-roles.enum';
 
 @Controller('product-addons')
 export class ProductAddonsController {

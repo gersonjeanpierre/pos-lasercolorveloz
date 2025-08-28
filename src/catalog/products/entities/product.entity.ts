@@ -2,7 +2,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
 import { ProductAttribute } from '@/catalog/product-attributes/entities/product-attribute.entity';
 import { ProductAddon } from '@catalog/product-addons/entities/product-addon.entity';
-import { ProductType } from '@/common/interfaces/catalog/products/product-type.enum';
+import { ProductType } from '@/common/enums/catalog/products/product-type.enum';
 
 @Entity()
 export class Product {

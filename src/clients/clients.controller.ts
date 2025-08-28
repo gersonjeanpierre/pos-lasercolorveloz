@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Auth } from '@/auth/decorators';
-import { ValidRoles } from '@/common/interfaces/auth/valid-roles.interface';
+import { ValidRoles } from '@/common/enums/auth/valid-roles.enum';
 
 @Controller('clients')
 export class ClientsController {
@@ -33,5 +33,4 @@ export class ClientsController {
   remove(@Param('id') id: string) {
     return this.clientsService.remove(id);
   }
-
 }

@@ -1,5 +1,5 @@
 import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
-import { ValidTypePerson } from "@/common/interfaces/clients/valid-type-person.interface";
+import { ValidTypePerson } from "@/common/enums/clients/valid-type-person.enum";
 import { CreateClientDto } from "@/clients/dto/create-client.dto";
 
 @ValidatorConstraint({ name: 'fullNameLength', async: false })

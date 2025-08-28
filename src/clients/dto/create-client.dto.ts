@@ -1,9 +1,13 @@
 import { IsEnum, IsOptional, IsString, MaxLength, MinLength, Validate, ValidateIf } from 'class-validator';
-import { ValidTypeClients } from '@/common/interfaces/clients/valid-type-clients.interface';
-import { ValidTypePerson } from '@/common/interfaces/clients/valid-type-person.interface';
+import { ValidTypeClients } from '@/common/enums/clients/valid-type-clients.enum';
+import { ValidTypePerson } from '@/common/enums/clients/valid-type-person.enum';
 import { DniOrCeConstraint, FullNameLengthConstraint } from '@/common/validators/clients/create-client.validator';
 
 export class CreateClientDto {
+  @IsOptional()
+  @IsString()
+  id?: string;
+
   @IsEnum(ValidTypePerson, {
     message: `El tipo de persona debe ser uno de los siguientes: ${Object.values(ValidTypePerson).join(', ')}`
   })

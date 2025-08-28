@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { Auth } from '@auth/decorators/auth.decorator'
-import { ValidRoles } from '@/common/interfaces/auth/valid-roles.interface';
+import { ValidRoles } from '@/common/enums/auth/valid-roles.enum';
 
 @Controller('products')
 @Auth(ValidRoles.admin)

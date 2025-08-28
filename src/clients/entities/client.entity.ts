@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import { ValidTypeClients } from "@/common/interfaces/clients/valid-type-clients.interface";
-import { ValidTypePerson } from "@/common/interfaces/clients/valid-type-person.interface";
+import { ValidTypeClients } from "@/common/enums/clients/valid-type-clients.enum";
+import { ValidTypePerson } from "@/common/enums/clients/valid-type-person.enum";
 
 @Entity('clients')
 export class Client {
