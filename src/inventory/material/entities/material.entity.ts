@@ -1,11 +1,12 @@
 
 import { InventoryMovement } from '@/inventory/movements/entities/movement.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Stand } from '@/locations/stand/entities/stand.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Material {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
   @Column({
     type: 'varchar',
@@ -59,5 +60,11 @@ export class Material {
     (movement) => movement.material
   )
   movements: InventoryMovement[];
+
+  @ManyToOne(
+    () => Stand,
+    (stand) => stand.materials
+  )
+  stand: Stand;
 
 }
