@@ -1,14 +1,29 @@
-const data = {
-  name: "Ojales",
-  baseCost: 0.50,
-  price: 1
-};
+import { ApiClient } from "../api-client";
 
-fetch("http://localhost:3000/api/v1/product-addons", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-})
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
+const productAddonApiClient = new ApiClient("product-addons");
+
+const data = [
+  {
+    name: "Termosellado",
+    price: 2
+  },
+  {
+    name: "Tubo y colgante",
+    price: 5
+  },
+  {
+    name: "Ojales",
+    price: 1
+  },
+  {
+    name: "Bastidores",
+    price: 2.5
+  }
+];
+
+const createProductAddons = async () => {
+  const result = await productAddonApiClient.post(data);
+  console.log(result);
+}
+
+createProductAddons();
