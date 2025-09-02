@@ -1,6 +1,8 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, PrimaryColumn, Index, Generated } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, PrimaryColumn, Index, Generated, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { Gallery } from '../../gallery/entities/gallery.entity';
+import { Material } from '@/inventory/material/entities/material.entity';
+import { InventoryMovement } from '@/inventory/movements/entities/movement.entity';
 
 @Entity()
 export class Stand {
@@ -84,4 +86,17 @@ export class Stand {
     (gallery) => gallery.stands
   )
   gallery: Gallery;
+
+  @OneToMany(
+    () => Material,
+    (material) => material.stand
+  )
+  materials: Material[];
+
+  @OneToMany(
+    () => InventoryMovement,
+    (movement) => movement.stand
+  )
+  movements: InventoryMovement[];
+
 }
