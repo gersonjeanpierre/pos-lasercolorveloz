@@ -24,16 +24,16 @@ export class ProductAddonsController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<ProductAddon> {
-    return this.productAddonService.findOne(+id);
+    return this.productAddonService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductAddonDto: UpdateProductAddonDto): Promise<ProductAddon> {
-    return this.productAddonService.update(+id, updateProductAddonDto);
+    return this.productAddonService.update(id, updateProductAddonDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productAddonService.remove(+id);
+    return this.productAddonService.remove(id);
   }
 }

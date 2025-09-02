@@ -32,7 +32,7 @@ export class ProductAttributesService {
     return this.attributeRepository.find();
   }
 
-  async findOne(id: number): Promise<ProductAttribute> {
+  async findOne(id: string): Promise<ProductAttribute> {
     const attribute = await this.attributeRepository.findOne({ where: { id } });
     if (!attribute) {
       throw new NotFoundException(`Atributo con ID ${id} no encontrado`);
@@ -40,7 +40,7 @@ export class ProductAttributesService {
     return attribute;
   }
 
-  async update(id: number, updateProductAttributeDto: UpdateProductAttributeDto): Promise<ProductAttribute> {
+  async update(id: string, updateProductAttributeDto: UpdateProductAttributeDto): Promise<ProductAttribute> {
     const attribute = await this.attributeRepository.preload({
       id: id,
       ...updateProductAttributeDto,
@@ -52,11 +52,12 @@ export class ProductAttributesService {
     return this.attributeRepository.save(attribute);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const attribute = await this.findOne(id);
     if (!attribute) {
       throw new NotFoundException(`Atributo con ID ${id} no encontrado`);
     }
-    await this.attributeRepository.remove(attribute);
+    attribute.isActive = false;
+    await this.attributeRepository.save(attribute);
   }
 }

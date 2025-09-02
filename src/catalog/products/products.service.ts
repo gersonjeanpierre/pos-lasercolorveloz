@@ -1,11 +1,12 @@
 // src/products/products.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductAddon } from '@catalog/product-addons/entities/product-addon.entity';
+import { v7 as uuidv7 } from 'uuid';
 
 @Injectable()
 export class ProductsService {
@@ -17,22 +18,32 @@ export class ProductsService {
   ) { }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { addonIds, ...productData } = createProductDto;
-    const product = this.productRepository.create(productData);
 
-    if (addonIds && addonIds.length > 0) {
-      const addons = await this.addonRepository.findByIds(addonIds);
-      product.addons = addons;
+    try {
+      const { addonIds, ...productData } = createProductDto;
+      const product = this.productRepository.create({
+        ...productData,
+        id: uuidv7()
+      });
+
+      if (addonIds && addonIds.length > 0) {
+        const addons = await this.addonRepository.findBy({ id: In(addonIds) });
+        product.addons = addons;
+      }
+
+      return this.productRepository.save(product);
+
+    } catch (error) {
+      throw new NotFoundException('Error al crear el producto');
     }
 
-    return this.productRepository.save(product);
   }
 
   async findAll(): Promise<Product[]> {
     return this.productRepository.find({ relations: ['addons', 'attributes'] });
   }
 
-  async findOne(id: number): Promise<Product> {
+  async findOne(id: string): Promise<Product> {
     const product = await this.productRepository.findOne({ where: { id, isActive: true }, relations: ['addons', 'attributes'] });
     if (!product) {
       throw new NotFoundException(`Producto con ID ${id} no encontrado`);
@@ -40,7 +51,7 @@ export class ProductsService {
     return product;
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
     const { addonIds, ...productData } = updateProductDto;
     const product = await this.findOne(id);
     if (!product) {
@@ -50,14 +61,14 @@ export class ProductsService {
     Object.assign(product, productData);
 
     if (addonIds) {
-      const addons = await this.addonRepository.findByIds(addonIds);
+      const addons = await this.addonRepository.findBy({ id: In(addonIds) });
       product.addons = addons;
     }
 
     return this.productRepository.save(product);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const product = await this.findOne(id);
     if (!product) {
       throw new NotFoundException(`Producto con ID ${id} no encontrado`);

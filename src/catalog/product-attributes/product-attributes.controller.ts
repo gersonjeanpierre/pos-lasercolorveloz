@@ -20,16 +20,16 @@ export class ProductAttributesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productAttributesService.findOne(+id);
+    return this.productAttributesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductAttributeDto: UpdateProductAttributeDto) {
-    return this.productAttributesService.update(+id, updateProductAttributeDto);
+    return this.productAttributesService.update(id, updateProductAttributeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productAttributesService.remove(+id);
+    return this.productAttributesService.remove(id);
   }
 }

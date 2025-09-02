@@ -1,13 +1,16 @@
 // src/products/entities/addon.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, PrimaryColumn } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 
 @Entity()
 export class ProductAddon {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100
+  })
   name: string; // Por ejemplo: 'Ojales', 'Bastidor'
 
   @Column({
@@ -15,19 +18,17 @@ export class ProductAddon {
     precision: 10,
     scale: 2
   })
-  price: number; // Costo extra por el agregado
+  price: number;
 
   @Column({
-    type: 'decimal',
-    precision: 10,
-    scale: 2,
+    type: 'boolean',
+    default: true
   })
-  baseCost: number;
+  isActive: boolean;
 
   @ManyToMany(
     () => Product,
     (product) => product.addons
   )
-  @JoinTable()
   products: Product[];
 }

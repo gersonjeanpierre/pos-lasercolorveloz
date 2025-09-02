@@ -1,13 +1,13 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToMany, PrimaryColumn, JoinTable } from 'typeorm';
 import { ProductAttribute } from '@/catalog/product-attributes/entities/product-attribute.entity';
 import { ProductAddon } from '@catalog/product-addons/entities/product-addon.entity';
 import { ProductType } from '@/common/enums/catalog/products/product-type.enum';
 
 @Entity()
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
@@ -34,6 +34,7 @@ export class Product {
   baseCost: number;
 
   @Column({
+    type: 'boolean',
     default: true
   })
   isActive: boolean;
@@ -48,5 +49,6 @@ export class Product {
     () => ProductAddon,
     (addon) => addon.products
   )
+  @JoinTable()
   addons: ProductAddon[];
 }

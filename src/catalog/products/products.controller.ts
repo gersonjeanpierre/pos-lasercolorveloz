@@ -8,7 +8,7 @@ import { Auth } from '@auth/decorators/auth.decorator'
 import { ValidRoles } from '@/common/enums/auth/valid-roles.enum';
 
 @Controller('products')
-@Auth(ValidRoles.admin)
+// @Auth(ValidRoles.admin)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
@@ -24,16 +24,16 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Product> {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto): Promise<Product> {
-    return this.productsService.update(+id, updateProductDto);
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }

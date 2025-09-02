@@ -1,17 +1,29 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Product } from '../../products/entities/product.entity';
 
 @Entity()
 export class ProductAttribute {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100
+  })
   name: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100
+  })
   value: string;
+
+  @Column({
+    type: 'boolean',
+    default: true
+  })
+  isActive: boolean;
 
   @ManyToOne(
     () => Product,

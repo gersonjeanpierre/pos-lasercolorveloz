@@ -1,10 +1,11 @@
 // src/addons/addons.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductAddon } from '@catalog/product-addons/entities/product-addon.entity';
 import { CreateProductAddonDto } from './dto/create-product-addon.dto';
 import { UpdateProductAddonDto } from './dto/update-product-addon.dto';
+import { v7 as uuidv7 } from 'uuid';
 
 @Injectable()
 export class ProductAddonsService {
@@ -14,15 +15,22 @@ export class ProductAddonsService {
   ) { }
 
   create(createAddonDto: CreateProductAddonDto): Promise<ProductAddon> {
-    const addon = this.addonRepository.create(createAddonDto);
-    return this.addonRepository.save(addon);
+    try {
+      const addon = this.addonRepository.create({
+        ...createAddonDto,
+        id: uuidv7()
+      });
+      return this.addonRepository.save(addon);
+    } catch (error) {
+      throw new InternalServerErrorException('Error al crear el agregado');
+    }
   }
 
   findAll(): Promise<ProductAddon[]> {
     return this.addonRepository.find();
   }
 
-  async findOne(id: number): Promise<ProductAddon> {
+  async findOne(id: string): Promise<ProductAddon> {
     const addon = await this.addonRepository.findOne({ where: { id } });
     if (!addon) {
       throw new NotFoundException(`Agregado con ID ${id} no encontrado`);
@@ -30,23 +38,17 @@ export class ProductAddonsService {
     return addon;
   }
 
-  async update(id: number, updateAddonDto: UpdateProductAddonDto): Promise<ProductAddon> {
-    const addon = await this.addonRepository.preload({
-      id: id,
-      ...updateAddonDto,
-    });
-
-    if (!addon) {
-      throw new NotFoundException(`Agregado con ID ${id} no encontrado`);
-    }
+  async update(id: string, updateAddonDto: UpdateProductAddonDto): Promise<ProductAddon> {
+    const addon = await this.addonRepository.findOne({ where: { id } });
+    if (!addon) throw new NotFoundException('Agregado no encontrado');
+    this.addonRepository.merge(addon, updateAddonDto);
     return this.addonRepository.save(addon);
   }
 
-  async remove(id: number): Promise<void> {
-    const addon = await this.findOne(id);
-    if (!addon) {
-      throw new NotFoundException(`Agregado con ID ${id} no encontrado`);
-    }
-    await this.addonRepository.remove(addon);
+  async remove(id: string): Promise<void> {
+    const addon = await this.addonRepository.findOne({ where: { id } });
+    if (!addon) throw new NotFoundException('Agregado no encontrado');
+    addon.isActive = false;
+    await this.addonRepository.save(addon);
   }
 }
