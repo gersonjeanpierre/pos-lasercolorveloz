@@ -1,4 +1,3 @@
-import { Order } from "@/orders/entities/order.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('users')
@@ -51,12 +50,6 @@ export class User {
     unique: true
   })
   refreshToken: string;
-
-  @OneToMany(
-    () => Order,
-    (order) => order.user
-  )
-  order: Order;
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {

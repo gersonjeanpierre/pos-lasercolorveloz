@@ -39,7 +39,13 @@
       ],
       "@common/*": [
         "src/common/*"
-      ]
+      ],
+      "@sales/*": [
+        "src/sales/*"
+      ],
+      "@locations/*": [
+        "src/locations/*"
+      ],
     }
   }
 }

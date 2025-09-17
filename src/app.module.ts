@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfigation } from './config/env.config';
 import { UsersModule } from './users/users.module';
-import { OrdersModule } from './orders/orders.module';
 import { ClientsModule } from './clients/clients.module';
 
 import { CatalogModule } from './catalog/catalog.module';
@@ -29,11 +28,10 @@ import { LocationsModule } from './locations/locations.module';
     }),
     AuthModule,
     UsersModule,
-    OrdersModule,
     ClientsModule,
     CatalogModule,
     InventoryModule,
-    LocationsModule
+    LocationsModule,
   ],
   controllers: [],
   providers: [],
